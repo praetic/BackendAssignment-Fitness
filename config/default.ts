@@ -1,4 +1,4 @@
-import { IConfig } from '../src/types/config'
+import type { IConfig } from '../src/types/config'
 /* import logger from '../src/utils/logger' */
 import env from '../env'
 
@@ -32,5 +32,5 @@ export default {
 		refreshTokenSecret: env.REFRESH_TOKEN_SECRET,
 		accessTokenExpiration: env.ACCESS_TOKEN_EXPIRATION,
 		refreshTokenExpiration: env.REFRESH_TOKEN_EXPIRATION
-	},
+	}
 } satisfies IConfig
