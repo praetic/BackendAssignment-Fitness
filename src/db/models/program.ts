@@ -1,11 +1,11 @@
-import { Sequelize, DataTypes, Model } from 'sequelize'
-import { EXERCISE_DIFFICULTY } from '../utils/enums'
-import { ExerciseModel } from './exercise'
+import { type Sequelize, DataTypes, type Model } from 'sequelize'
+import type { EXERCISE_DIFFICULTY } from '../../utils/enums'
+import type { ExerciseModel } from './exercise'
 
 export interface ProgramModel extends Model {
 	id: number
 	difficulty: EXERCISE_DIFFICULTY
-	name: String
+	name: string
 
 	exercises: ExerciseModel[]
 }
@@ -21,9 +21,9 @@ export default (sequelize: Sequelize, modelName: string) => {
 				autoIncrement: true
 			},
 			name: {
-				type: DataTypes.STRING(200),
+				type: DataTypes.STRING(200)
 			}
-		}, 
+		},
 		{
 			paranoid: true,
 			timestamps: true,
