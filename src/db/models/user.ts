@@ -6,6 +6,7 @@ export interface UserModel extends Model {
 	id: number
 	name: string
 	nickName: string
+	surname: string
 	email: string
 	age: number
 	role: ROLE
@@ -30,6 +31,9 @@ export default (sequelize: Sequelize, modelName: string) => {
 			nickName: {
 				type: DataTypes.STRING
 			},
+			surname: {
+				type: DataTypes.STRING
+			},
 			email: {
 				type: DataTypes.STRING
 			},
@@ -51,14 +55,7 @@ export default (sequelize: Sequelize, modelName: string) => {
 		}
 	)
 
-	UserModelCtor.associate = (models) => {
-		/* ExerciseModelCtor.belongsTo(models.Program, {
-			foreignKey: {
-				name: 'programID',
-				allowNull: false
-			}
-		}) */
-	}
+	UserModelCtor.associate = (_models) => {}
 
 	return UserModelCtor
 }

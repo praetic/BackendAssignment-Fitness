@@ -5,7 +5,7 @@ export class ApiError extends Error {
 	code: string
 	issues?: z.core.$ZodIssue[]
 
-	constructor(statusCode: number, message: string, code: string, issues?: z.core.$ZodIssue[]) {
+	constructor(statusCode: number, code: string, message: string, issues?: z.core.$ZodIssue[]) {
 		super(message)
 		this.statusCode = statusCode
 		this.code = code

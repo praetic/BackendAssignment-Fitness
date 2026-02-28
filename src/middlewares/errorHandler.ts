@@ -6,7 +6,8 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next): void =
 		res.status(err.statusCode).json({
 			error: {
 				code: err.code,
-				message: err.message
+				message: err.message,
+				...(err.issues && { issues: err.issues }) // attach issues if exist
 			}
 		})
 

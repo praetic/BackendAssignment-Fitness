@@ -23,6 +23,6 @@ export type AuthJwtPayload = {
 }
 
 export const signAccessToken = (user: JwtUser) =>
-	jwt.sign({ sub: user.id, role: user.role }, accessTokenSecret, {
+	jwt.sign({ sub: user.id }, accessTokenSecret, {
 		expiresIn: accessTokenExpiry as SignOptions['expiresIn']
 	})

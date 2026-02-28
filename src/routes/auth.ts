@@ -6,6 +6,7 @@ import { loginUser, registerUser } from '../services/auth'
 const router = Router()
 
 export default () => {
+	//#region login
 	router.post(
 		'/login',
 		validateBody(loginBodySchema),
@@ -24,7 +25,9 @@ export default () => {
 			}
 		}
 	)
+	//#endregion
 
+	//#region register
 	router.post(
 		'/register',
 		validateBody(registerBodySchema),
@@ -43,6 +46,7 @@ export default () => {
 			}
 		}
 	)
+	//#endregion
 
 	return router
 }

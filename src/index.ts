@@ -1,12 +1,10 @@
-import http from 'http'
+import http from 'node:http'
 import express from 'express'
 
 import { sequelize } from './db'
-import ProgramRouter from './routes/programs'
-import ExerciseRouter from './routes/exercises'
-import AuthRouter from './routes/auth'
 import { initPassport } from './utils/passport'
 import { errorHandler } from './middlewares/errorHandler'
+import registerRoutes from './routes'
 
 const app = express()
 
@@ -15,11 +13,11 @@ const passport = initPassport()
 app.use(passport.initialize())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use('/api/programs', ProgramRouter())
-app.use('/api/exercises', ExerciseRouter())
-app.use('/api/auth', AuthRouter())
 
-//error handler
+// routes
+app.use('/api', registerRoutes())
+
+// error handler
 app.use(errorHandler)
 
 const httpServer = http.createServer(app)

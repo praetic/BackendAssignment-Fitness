@@ -3,6 +3,9 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 import config from 'config'
 import type { IConfig as IConfigMap } from '../types/config'
 import type { AuthJwtPayload } from './jwt'
+import { models } from '../db'
+
+const { User } = models
 
 const accessTokenSecret = config.get(
 	'jwt.accessTokenSecret'
@@ -17,8 +20,13 @@ export const registerJwtStrategy = (passport: PassportStatic) => {
 			},
 			async (payload: AuthJwtPayload, done) => {
 				try {
-					//todo get user from db
-					return done(null, payload)
+					const user = await User.findByPk(Number(payload.sub))
+
+					if (!user) {
+						return done(null, false)
+					}
+
+					return done(null, { id: user.id, role: user.role })
 				} catch (err) {
 					return done(err, false)
 				}

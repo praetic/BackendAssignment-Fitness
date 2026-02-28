@@ -6,7 +6,7 @@ import { ApiError } from '../utils/ApiError'
 
 export const validateBody =
 	<TBody>(schema: ZodType<TBody>): RequestHandler<ParamsDictionary, unknown, TBody, ParsedQs> =>
-	(req, res, next) => {
+	(req, _res, next) => {
 		const result = schema.safeParse(req.body)
 
 		if (!result.success) {
@@ -21,19 +21,14 @@ export const validateQuery =
 	<TQuery extends ParsedQs>(
 		schema: ZodType<TQuery>
 	): RequestHandler<ParamsDictionary, unknown, unknown, TQuery> =>
-	(req, res, next) => {
+	(req, _res, next) => {
 		const result = schema.safeParse(req.query)
 
 		if (!result.success) {
-			res.status(400).json({
-				success: false,
-				error: 'Invalid query!',
-				issues: result.error.issues
-			})
-			return
+			throw new ApiError(400, 'INVALID_QUERY', 'Invalid query!', result.error.issues)
 		}
 
-		req.query = result.data as any
+		req.query = result.data
 		next()
 	}
 
@@ -41,20 +36,16 @@ export const validateParams =
 	<TParams extends ParamsDictionary>(
 		schema: ZodType<TParams>
 	): RequestHandler<TParams, unknown, unknown, ParsedQs> =>
-	(req, res, next) => {
+	(req, _res, next) => {
 		const result = schema.safeParse(req.params)
 
 		if (!result.success) {
-			res.status(400).json({
-				success: false,
-				error: 'Invalid route parameters!',
-				issues: result.error.issues.map((issue) => ({
-					path: issue.path.join('.'),
-					message: issue.message,
-					code: issue.code
-				}))
-			})
-			return
+			throw new ApiError(
+				400,
+				'INVALID_ROUTE_PARAMS',
+				'Invalid route parameters!',
+				result.error.issues
+			)
 		}
 
 		req.params = result.data
