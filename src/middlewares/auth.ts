@@ -1,6 +1,6 @@
 import passport from 'passport'
 import type { Request, Response, NextFunction } from 'express'
-import { ApiError } from '../utils/ApiError'
+import { ApiError, ErrorCode } from '../utils/ApiError'
 
 export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
 	passport.authenticate('jwt', { session: false }, (err: unknown, user: Express.User | false) => {
@@ -9,7 +9,7 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 		}
 
 		if (!user) {
-			throw new ApiError(401, 'UNAUTHORIZED', 'Authentication required!')
+			throw new ApiError(401, ErrorCode.UNAUTHORIZED, 'Authentication required!')
 		}
 
 		req.user = user

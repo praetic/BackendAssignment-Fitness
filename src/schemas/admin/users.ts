@@ -10,12 +10,13 @@ const patchAdminUserParamsSchema = z.object({
 })
 
 const patchAdminUserBodySchema = z.object({
-	name: z.string().min(1).optional(),
-	surname: z.string().min(1).optional(),
-	nickName: z.string().min(1).optional(),
-	age: z.number().optional(),
+	name: z.string().min(1).max(200).optional(),
+	surname: z.string().min(1).max(200).optional(),
+	nickName: z.string().min(1).max(200).optional(),
+	age: z.number().min(1).optional(),
 	role: z.enum(ROLE).optional()
 })
+
 type getAdminUserParams = z.infer<typeof getAdminUserParamsSchema>
 type patchAdminUserParams = z.infer<typeof patchAdminUserParamsSchema>
 type patchAdminUserBody = z.infer<typeof patchAdminUserBodySchema>

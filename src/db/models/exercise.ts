@@ -7,6 +7,9 @@ export interface ExerciseModel extends Model {
 	id: number
 	difficulty: EXERCISE_DIFFICULTY
 	name: string
+	createdAt: Date
+	updatedAt: Date
+	deletedAt?: Date | null
 
 	program: ProgramModel
 }
@@ -16,16 +19,18 @@ export default (sequelize: Sequelize, modelName: string) => {
 		modelName,
 		{
 			id: {
-				type: DataTypes.BIGINT,
+				type: DataTypes.INTEGER,
 				primaryKey: true,
 				allowNull: false,
 				autoIncrement: true
 			},
 			difficulty: {
-				type: DataTypes.ENUM(...Object.values(EXERCISE_DIFFICULTY))
+				type: DataTypes.ENUM(...Object.values(EXERCISE_DIFFICULTY)),
+				allowNull: false
 			},
 			name: {
-				type: DataTypes.STRING(200)
+				type: DataTypes.STRING(200),
+				allowNull: false
 			}
 		},
 		{
@@ -39,6 +44,12 @@ export default (sequelize: Sequelize, modelName: string) => {
 		ExerciseModelCtor.belongsTo(models.Program, {
 			foreignKey: {
 				name: 'programID',
+				allowNull: false
+			}
+		})
+		ExerciseModelCtor.hasMany(models.CompletedExercise, {
+			foreignKey: {
+				name: 'exerciseID',
 				allowNull: false
 			}
 		})

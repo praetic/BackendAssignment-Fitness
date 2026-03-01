@@ -15,6 +15,5 @@ export interface IConfig {
 		accessTokenSecret: string
 		refreshTokenSecret: string
 		accessTokenExpiration: string
-		refreshTokenExpiration: string
 	}
 }

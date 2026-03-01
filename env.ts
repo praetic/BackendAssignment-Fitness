@@ -22,8 +22,7 @@ const envSchema = z.object({
 	DB_HOST: z.string().min(1),
 	ACCESS_TOKEN_SECRET: z.string().min(1),
 	REFRESH_TOKEN_SECRET: z.string().min(1),
-	ACCESS_TOKEN_EXPIRATION: z.string().min(2),
-	REFRESH_TOKEN_EXPIRATION: z.string().min(2)
+	ACCESS_TOKEN_EXPIRATION: z.string().min(2)
 })
 
 // Validate `process.env` against our schema

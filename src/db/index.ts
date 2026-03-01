@@ -6,6 +6,7 @@ import config from 'config'
 import defineExercise from './models/exercise'
 import defineProgram from './models/program'
 import defineUser from './models/user'
+import defineCompletedExercise from './models/completedExercise'
 import type { IConfig as IConfigMap } from '../types/config'
 
 const DATABASE_CONFIG = config.get('database') as IConfigMap['database']
@@ -25,11 +26,13 @@ sequelize.authenticate().catch((e: any) => console.error(`Unable to connect to t
 const Exercise = defineExercise(sequelize, 'exercise')
 const Program = defineProgram(sequelize, 'program')
 const User = defineUser(sequelize, 'user')
+const CompletedExercise = defineCompletedExercise(sequelize, 'completedExercise')
 
 const models = {
 	Exercise,
 	Program,
-	User
+	User,
+	CompletedExercise
 }
 type Models = typeof models
 

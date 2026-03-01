@@ -1,11 +1,11 @@
 import { Router, type Request, type Response, type NextFunction } from 'express'
-import { createExercise, deleteExercise, updateExercise } from '../../services/excercise'
+import { createExercise, deleteExercise, updateExercise } from '../../services/admin/excercise'
 import {
 	createExerciseBodySchema,
 	deleteExerciseParamsSchema,
 	updateExerciseBodySchema,
 	updateExerciseParamsSchema
-} from '../../schemas/exercise'
+} from '../../schemas/admin/exercises'
 import { validateBody, validateParams } from '../../middlewares/validate'
 
 const router = Router()

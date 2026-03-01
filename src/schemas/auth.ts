@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ROLE } from '../utils/enums'
 
 const registerBodySchema = z.object({
-	email: z.email({ message: 'Invalid email format!' }),
+	email: z.email({ message: 'Invalid email format!' }).max(200),
 	password: z
 		.string()
 		.min(6, { message: 'Password must be at least 6 characters long' })
@@ -12,7 +12,7 @@ const registerBodySchema = z.object({
 })
 
 const loginBodySchema = z.object({
-	email: z.email({ message: 'Invalid email format!' }),
+	email: z.email({ message: 'Invalid email format!' }).max(200),
 	password: z
 		.string()
 		.min(6, { message: 'Password must be at least 6 characters long' })

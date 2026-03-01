@@ -1,6 +1,7 @@
 import { type Sequelize, DataTypes, type Model } from 'sequelize'
 
 import { ROLE } from '../../utils/enums'
+import type { CompletedExerciseModel } from './completedExercise'
 
 export interface UserModel extends Model {
 	id: number
@@ -13,6 +14,9 @@ export interface UserModel extends Model {
 	password: string
 	createdAt: Date
 	updatedAt: Date
+	deletedAt?: Date | null
+
+	completedExercises: CompletedExerciseModel[]
 }
 
 export default (sequelize: Sequelize, modelName: string) => {
@@ -20,32 +24,38 @@ export default (sequelize: Sequelize, modelName: string) => {
 		modelName,
 		{
 			id: {
-				type: DataTypes.BIGINT,
+				type: DataTypes.INTEGER,
 				primaryKey: true,
 				allowNull: false,
 				autoIncrement: true
 			},
 			name: {
-				type: DataTypes.STRING
+				type: DataTypes.STRING(200),
+				allowNull: true
 			},
 			nickName: {
-				type: DataTypes.STRING
+				type: DataTypes.STRING(200),
+				allowNull: true
 			},
 			surname: {
-				type: DataTypes.STRING
+				type: DataTypes.STRING(200),
+				allowNull: true
 			},
 			email: {
-				type: DataTypes.STRING
+				type: DataTypes.STRING(200),
+				allowNull: false
 			},
 			age: {
-				type: DataTypes.INTEGER
+				type: DataTypes.INTEGER,
+				allowNull: true
 			},
-
 			role: {
-				type: DataTypes.ENUM(...Object.values(ROLE))
+				type: DataTypes.ENUM(...Object.values(ROLE)),
+				allowNull: false
 			},
 			password: {
-				type: DataTypes.STRING
+				type: DataTypes.STRING,
+				allowNull: false
 			}
 		},
 		{
@@ -55,7 +65,15 @@ export default (sequelize: Sequelize, modelName: string) => {
 		}
 	)
 
-	UserModelCtor.associate = (_models) => {}
+	UserModelCtor.associate = (models) => {
+		UserModelCtor.hasMany(models.CompletedExercise, {
+			foreignKey: {
+				name: 'userID',
+				allowNull: false
+			},
+			onDelete: 'CASCADE'
+		})
+	}
 
 	return UserModelCtor
 }

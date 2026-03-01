@@ -1,9 +1,9 @@
 import { z } from 'zod'
-import { EXERCISE_DIFFICULTY } from '../utils/enums'
+import { EXERCISE_DIFFICULTY } from '../../utils/enums'
 
 const createExerciseBodySchema = z.object({
 	difficulty: z.enum(EXERCISE_DIFFICULTY),
-	name: z.string().min(1),
+	name: z.string().max(200).min(1),
 	programID: z.number()
 })
 
@@ -14,7 +14,7 @@ const updateExerciseParamsSchema = z.object({
 const deleteExerciseParamsSchema = updateExerciseParamsSchema
 
 const updateExerciseBodySchema = z.object({
-	name: z.string().min(1).optional(),
+	name: z.string().min(1).max(200).optional(),
 	difficulty: z.enum(EXERCISE_DIFFICULTY).optional(),
 	programID: z.number().optional()
 })

@@ -31,6 +31,5 @@ export default {
 		accessTokenSecret: env.ACCESS_TOKEN_SECRET,
 		refreshTokenSecret: env.REFRESH_TOKEN_SECRET,
 		accessTokenExpiration: env.ACCESS_TOKEN_EXPIRATION,
-		refreshTokenExpiration: env.REFRESH_TOKEN_EXPIRATION
 	}
 } satisfies IConfig

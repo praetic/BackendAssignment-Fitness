@@ -5,7 +5,7 @@ import {
 	getAdminUserParamsSchema,
 	patchAdminUserBodySchema,
 	patchAdminUserParamsSchema
-} from '../../schemas/admin/user'
+} from '../../schemas/admin/users'
 
 const router = Router()
 
