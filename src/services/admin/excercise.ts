@@ -1,9 +1,9 @@
-import { models } from '../../db'
+import { models, sequelize } from '../../db'
 import type { updateExerciseBody } from '../../schemas/admin/exercises'
 import { ApiError, ErrorCode } from '../../utils/ApiError'
 import type { EXERCISE_DIFFICULTY } from '../../utils/enums'
 
-const { Exercise, Program } = models
+const { Exercise, Program, CompletedExercise } = models
 
 export const createExercise = async (
 	difficulty: EXERCISE_DIFFICULTY,
@@ -56,13 +56,27 @@ export const updateExercise = async (exerciseID: number, updateData: updateExerc
 }
 
 export const deleteExercise = async (exerciseID: number) => {
-	const count = await Exercise.destroy({ where: { id: exerciseID } })
+	const t = await sequelize.transaction()
 
-	if (count === 0) {
-		throw new ApiError(404, ErrorCode.NOT_FOUND, 'Exercise not found!')
-	}
+	try {
+		const exercise = await Exercise.findByPk(exerciseID)
 
-	return {
-		id: exerciseID
+		if (!exercise) {
+			throw new ApiError(404, ErrorCode.NOT_FOUND, 'Exercise not found!')
+		}
+
+		await CompletedExercise.destroy({ where: { exerciseID } })
+
+		await Exercise.destroy({ where: { id: exerciseID } })
+
+		await t.commit()
+
+		return {
+			id: exerciseID
+		}
+	} catch (err) {
+		await t.rollback()
+
+		throw err
 	}
 }

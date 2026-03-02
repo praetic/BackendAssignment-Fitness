@@ -1,7 +1,7 @@
 import { models, sequelize } from '../../db'
 import { ApiError, ErrorCode } from '../../utils/ApiError'
 
-const { Exercise, Program } = models
+const { Exercise, Program, CompletedExercise } = models
 
 export const updateAdminProgramExercises = async (programID: number, exerciseIDs: number[]) => {
 	const t = await sequelize.transaction()
@@ -40,16 +40,17 @@ export const updateAdminProgramExercises = async (programID: number, exerciseIDs
 		}
 
 		if (toRemove.length) {
+			await CompletedExercise.destroy({ where: { exerciseID: toRemove }, transaction: t })
 			await Exercise.destroy({ where: { id: toRemove }, transaction: t })
 		}
 
-		t.commit()
+		await t.commit()
 
 		return {
 			id: program.id
 		}
 	} catch (err) {
-		t.rollback()
+		await t.rollback()
 
 		throw err
 	}
