@@ -14,7 +14,7 @@ export const getUser = async (userID: number) => {
 	const user = await User.findByPk(userID, { attributes: { exclude: ['passwordHash'] } })
 
 	if (!user) {
-		throw new ApiError(404, ErrorCode.NOT_FOUND, 'User does not exist!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'User does not exist!')
 	}
 
 	return user
@@ -23,20 +23,16 @@ export const getUser = async (userID: number) => {
 export const updateUser = async (userID: number, updateData: patchAdminUserBody) => {
 	// if no fields provided, theres nothing to update
 	if (!updateData || Object.keys(updateData).length === 0) {
-		throw new ApiError(400, ErrorCode.EMPTY_BODY, 'No fields provided for update!')
+		throw new ApiError(ErrorCode.EMPTY_BODY, 'No fields provided for update!')
 	}
 
 	const user = await User.findByPk(userID)
 
 	if (!user) {
-		throw new ApiError(404, ErrorCode.NOT_FOUND, 'User does not exist!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'User does not exist!')
 	}
 
-	const [affectedRows] = await User.update(updateData, { where: { id: userID } })
-
-	if (affectedRows === 0) {
-		throw new ApiError(409, ErrorCode.CONFLICT, 'User does not exist!')
-	}
+	await User.update(updateData, { where: { id: userID } })
 
 	return { id: user.id }
 }

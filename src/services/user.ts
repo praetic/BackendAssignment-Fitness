@@ -16,7 +16,7 @@ export const getUser = async (userID: number) => {
 	})
 
 	if (!user) {
-		throw new ApiError(404, ErrorCode.NOT_FOUND, 'User not found!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'User not found!')
 	}
 
 	return user
@@ -24,17 +24,13 @@ export const getUser = async (userID: number) => {
 
 export const updateUser = async (userID: number, updateData: updateUserBody) => {
 	if (!updateData || Object.keys(updateData).length === 0) {
-		throw new ApiError(400, ErrorCode.EMPTY_BODY, 'No fields provided for update!')
+		throw new ApiError(ErrorCode.EMPTY_BODY, 'No fields provided for update!')
 	}
 
 	// user exists, we dont need to check because its been checked in jwt middleware
-	const [affectedRows] = await User.update(updateData, {
+	await User.update(updateData, {
 		where: { id: userID }
 	})
-
-	if (affectedRows === 0) {
-		throw new ApiError(409, ErrorCode.CONFLICT, 'User does not exist!')
-	}
 
 	return {
 		id: userID

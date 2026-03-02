@@ -13,7 +13,7 @@ export const createExercise = async (
 	const program = await Program.findOne({ where: { id: programID } })
 
 	if (!program) {
-		throw new ApiError(404, ErrorCode.NOT_FOUND, 'Program does not exist!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'Program does not exist!')
 	}
 
 	const exercise = await Exercise.create({ difficulty, name, programID })
@@ -26,13 +26,13 @@ export const createExercise = async (
 export const updateExercise = async (exerciseID: number, updateData: updateExerciseBody) => {
 	// if no fields provided, theres nothing to update
 	if (!updateData || Object.keys(updateData).length === 0) {
-		throw new ApiError(400, ErrorCode.EMPTY_BODY, 'No fields provided for update!')
+		throw new ApiError(ErrorCode.EMPTY_BODY, 'No fields provided for update!')
 	}
 
 	const exercise = await Exercise.findByPk(exerciseID)
 
 	if (!exercise) {
-		throw new ApiError(404, ErrorCode.NOT_FOUND, 'Exercise does not exist!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'Exercise does not exist!')
 	}
 
 	//if program doesnt exist
@@ -40,15 +40,11 @@ export const updateExercise = async (exerciseID: number, updateData: updateExerc
 		const program = await Program.findByPk(updateData.programID)
 
 		if (!program) {
-			throw new ApiError(404, ErrorCode.NOT_FOUND, 'Program does not exist!')
+			throw new ApiError(ErrorCode.NOT_FOUND, 'Program does not exist!')
 		}
 	}
 
-	const [affectedRows] = await Exercise.update(updateData, { where: { id: exerciseID } })
-
-	if (affectedRows === 0) {
-		throw new ApiError(409, ErrorCode.CONFLICT, 'Exercise does not exist!')
-	}
+	await Exercise.update(updateData, { where: { id: exerciseID } })
 
 	return {
 		id: exercise.id
@@ -62,7 +58,7 @@ export const deleteExercise = async (exerciseID: number) => {
 		const exercise = await Exercise.findByPk(exerciseID)
 
 		if (!exercise) {
-			throw new ApiError(404, ErrorCode.NOT_FOUND, 'Exercise not found!')
+			throw new ApiError(ErrorCode.NOT_FOUND, 'Exercise not found!')
 		}
 
 		await CompletedExercise.destroy({ where: { exerciseID } })

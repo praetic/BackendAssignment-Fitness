@@ -12,7 +12,7 @@ export const createCompletedExercise = async (
 	const exercise = await Exercise.findByPk(exerciseID)
 
 	if (!exercise) {
-		throw new ApiError(404, ErrorCode.NOT_FOUND, 'Exercise does not exist!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'Exercise does not exist!')
 	}
 
 	const completedExercise = await CompletedExercise.create({
@@ -35,7 +35,6 @@ export const deleteCompletedExercise = async (completedExerciseID: number, userI
 
 	if (!completedExercise) {
 		throw new ApiError(
-			404,
 			ErrorCode.NOT_FOUND,
 			'Completed exercise does not exist or cannot be deleted!'
 		)
