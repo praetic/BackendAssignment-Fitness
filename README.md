@@ -1,3 +1,180 @@
+# DOCUMENTATION:
+
+## Prerequisites
+- docker
+- node.js ^16.0.0
+- postgres ^16
+- set env variables in .env
+    - for this purpose you can copy variables from .env.example 
+
+## Installation and start
+- install dependencies ``` npm i ```
+- start db container ``` docker compose up ``` 
+- (optional) seed db ``` npm run seed ```
+- start application ``` npm start ```
+
+
+## Endpoints
+
+### public
+
+#### /auth
+- login 
+    ###### POST /api/auth/login
+    ``` JavaScript
+    body: {
+        email: string(email)
+        password: string(min:6 with at least one letter uppercase and at least one number)
+    }
+    ```
+- register
+    ###### POST /api/auth/register
+    ``` JavaScript
+    body: {
+        email: string(email)
+        password: string(min:6 with at least one letter uppercase and at least one number)
+        role: enum('ADMIN' | 'USER')
+    }
+    ```
+#### /exercises
+- get all exercises
+    ###### GET /api/exercises
+    ``` JavaScript
+    query: {
+        page?: number(min:1)
+        limit?: number(min:1)
+        programID?: number(min:1)
+        search?: string(min:1)
+    }
+    ```
+
+
+#### /programs 
+- get all programs
+    ###### GET /api/programs
+
+### protected
+#### /completed-exercises
+- get completed exercises for current user 
+    ###### GET /api/completed-exercises
+- delete completed exercise
+    ###### DELETE /api/completed-exercises/:completedExerciseID
+    ``` JavaScript
+    params: {
+        completedExerciseID: number
+    }
+    ```
+- create completed exercise
+    ###### POST /api/completed-exercises
+    ``` JavaScript
+    body: {
+        durationSeconds: number(min:1)
+        completedAt: date
+    }
+    ```
+#### /users
+- get all users
+    ###### GET /api/users
+- get current user
+    ###### GET /api/users/me
+- update current user
+    ###### PATCH /api/users/me
+    ``` JavaScript
+    body: {
+        name?: string(min:1, max:200)
+        nickName?: string(min:1, max:200)
+        surname?: string(min:1, max:200)
+        age?: number(min:1) 
+    }
+    ```
+
+### admin
+
+#### /programs
+- update program exercises 
+    ###### PATCH /api/admin/program/:programID/exercises
+    ``` JavaScript
+    params: {
+        programID: number
+    }
+
+    body: {
+        exerciseIDs: number[]
+    }
+    ```
+#### /exercises
+- create exercise 
+    ###### POST /api/admin/exercises
+    ``` JavaScript
+    body: {
+        difficulty: enum('EASY' | 'MEDIUM' | 'HARD')
+        name: string(min:1)
+        programID: number
+    }
+    ```
+
+- delete exercise 
+    ###### DELETE /api/admin/exercises/:exerciseID
+    ``` JavaScript
+    params: {
+        exerciseID: number
+    }
+    ```
+- update exercise 
+    ###### PATCH /api/admin/exercises
+    ``` JavaScript
+    body: {
+        difficulty?: enum('EASY' | 'MEDIUM' | 'HARD')
+        name?: string(min:1)
+        programID?: number
+    }
+
+#### /users
+- get all users 
+    ###### GET /api/admin/users
+
+- get user
+    ###### GET /api/admin/users/:userID
+    ``` JavaScript
+    params: {
+        userID: number
+    }
+    ```
+- update program exercises 
+    ###### PATCH /api/admin/users/:userID
+    ``` JavaScript
+    params: {
+        userID: number
+    }
+
+    body: {
+        name?: string(min:1)
+        surname?: string(min:1)
+        nickName?: string(min:1)
+        age?: number
+        role?: enum('ADMIN' | 'USER')
+    }
+
+### Tasks
+
+- create, update or delete exercises
+#### TASK 2 
+- create, update or delete exercises
+- edit exercises in program (add or remove)
+- get all users and all its data
+- get user detail
+- update any user (name, surname, nickName, age, nickName, role)
+
+#### TASK 3    
+- get all users (id, nickName)
+- get own profile data (name, surname, age, nickName)
+- track exercises he has completed (he can track same exercise multiple times, we want to save datetime of completion and duration in seconds)
+  - NOTE: Lets assume, user can track exercises backwards too.
+- see list of completed exercises (with datetime and duration) in profile
+- remove tracked exercise from completed exercises list
+
+
+
 # Fitness app - assignment
 
 ### Requirements
