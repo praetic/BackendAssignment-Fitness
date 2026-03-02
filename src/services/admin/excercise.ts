@@ -13,7 +13,7 @@ export const createExercise = async (
 	const program = await Program.findOne({ where: { id: programID } })
 
 	if (!program) {
-		throw new ApiError(ErrorCode.NOT_FOUND, 'Program does not exist!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'program_not_found')
 	}
 
 	const exercise = await Exercise.create({ difficulty, name, programID })
@@ -26,13 +26,13 @@ export const createExercise = async (
 export const updateExercise = async (exerciseID: number, updateData: updateExerciseBody) => {
 	// if no fields provided, theres nothing to update
 	if (!updateData || Object.keys(updateData).length === 0) {
-		throw new ApiError(ErrorCode.EMPTY_BODY, 'No fields provided for update!')
+		throw new ApiError(ErrorCode.EMPTY_BODY, 'no_fields_for_update')
 	}
 
 	const exercise = await Exercise.findByPk(exerciseID)
 
 	if (!exercise) {
-		throw new ApiError(ErrorCode.NOT_FOUND, 'Exercise does not exist!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'exercise_not_found')
 	}
 
 	//if program doesnt exist
@@ -40,7 +40,7 @@ export const updateExercise = async (exerciseID: number, updateData: updateExerc
 		const program = await Program.findByPk(updateData.programID)
 
 		if (!program) {
-			throw new ApiError(ErrorCode.NOT_FOUND, 'Program does not exist!')
+			throw new ApiError(ErrorCode.NOT_FOUND, 'program_not_found')
 		}
 	}
 
@@ -58,7 +58,7 @@ export const deleteExercise = async (exerciseID: number) => {
 		const exercise = await Exercise.findByPk(exerciseID)
 
 		if (!exercise) {
-			throw new ApiError(ErrorCode.NOT_FOUND, 'Exercise not found!')
+			throw new ApiError(ErrorCode.NOT_FOUND, 'exercise_not_found')
 		}
 
 		await CompletedExercise.destroy({ where: { exerciseID } })

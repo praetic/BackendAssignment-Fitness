@@ -18,7 +18,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'List of exercises!'
+					message: req.t('list_of_exercises')
 				})
 			} catch (err) {
 				next(err)

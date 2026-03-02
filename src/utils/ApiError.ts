@@ -32,6 +32,7 @@ export class ApiError extends Error {
 	code: string
 	issues?: z.core.$ZodIssue[]
 
+	// message -> translation key from locales
 	constructor(code: ErrorCode, message: string, issues?: z.core.$ZodIssue[]) {
 		super(message)
 		this.statusCode = errorCodeToStatus[code] ?? 500

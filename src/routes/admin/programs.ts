@@ -23,7 +23,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'List of exercises has been updated!'
+					message: req.t('exercise_list_updated')
 				})
 			} catch (err) {
 				next(err)

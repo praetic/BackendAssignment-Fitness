@@ -9,7 +9,7 @@ export const registerUser = async (email: string, password: string, role: string
 	const existingUser = await User.findOne({ where: { email }, attributes: ['id', 'passwordHash'] })
 
 	if (existingUser) {
-		throw new ApiError(ErrorCode.EMAIL_ALREADY_EXISTS, 'Email is already registered!')
+		throw new ApiError(ErrorCode.EMAIL_ALREADY_EXISTS, 'email_already_exists')
 	}
 
 	const passwordHash = await bcrypt.hash(password, 13)
@@ -35,13 +35,13 @@ export const loginUser = async (email: string, password: string) => {
 	const user = await User.findOne({ where: { email }, attributes: ['id', 'passwordHash'] })
 
 	if (!user) {
-		throw new ApiError(ErrorCode.INVALID_CREDENTIALS, 'Invalid email or password!')
+		throw new ApiError(ErrorCode.INVALID_CREDENTIALS, 'invalid_credentials')
 	}
 
 	const isMatch = await bcrypt.compare(password, user.passwordHash)
 
 	if (!isMatch) {
-		throw new ApiError(ErrorCode.INVALID_CREDENTIALS, 'Invalid email or password!')
+		throw new ApiError(ErrorCode.INVALID_CREDENTIALS, 'invalid_credentials')
 	}
 
 	return {

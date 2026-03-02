@@ -18,7 +18,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'User has logged in!'
+					message: req.t('user_logged_in')
 				})
 			} catch (err) {
 				next(err)
@@ -39,7 +39,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'User has been registered!'
+					message: req.t('user_registered')
 				})
 			} catch (err) {
 				next(err)

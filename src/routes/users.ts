@@ -5,12 +5,12 @@ const router = Router()
 
 export default () => {
 	//#region get Users
-	router.get('/', async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
+	router.get('/', async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 		const data = await getUsers()
 
 		return res.json({
 			data,
-			message: 'List of users!'
+			message: req.t('user_list')
 		})
 	})
 	//#endregion
@@ -23,7 +23,7 @@ export default () => {
 
 		return res.json({
 			data,
-			message: 'User data!'
+			message: req.t('user_detail')
 		})
 	})
 	//#endregion
@@ -37,7 +37,7 @@ export default () => {
 
 		return res.json({
 			data,
-			message: 'User has been updated!'
+			message: req.t('user_updated')
 		})
 	})
 	//#endregion

@@ -23,7 +23,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'Exercise has been created!'
+					message: req.t('exercise_created')
 				})
 			} catch (err) {
 				next(err)
@@ -46,7 +46,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'Exercise has been updated!'
+					message: req.t('exercise_updated')
 				})
 			} catch (err) {
 				next(err)
@@ -67,7 +67,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'Exercise has been deleted!'
+					message: req.t('exercise_deleted')
 				})
 			} catch (err) {
 				next(err)

@@ -31,7 +31,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'Completed exercise has been created!'
+					message: req.t('completed_exercise_created')
 				})
 			} catch (err) {
 				next(err)
@@ -53,7 +53,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'Completed exercise has been deleted!'
+					message: req.t('completed_exercise_deleted')
 				})
 			} catch (err) {
 				next(err)
@@ -71,7 +71,7 @@ export default () => {
 
 			return res.json({
 				data,
-				message: 'List of completed exercises for current user!'
+				message: req.t('completed_exercise_list_for_user')
 			})
 		} catch (err) {
 			next(err)

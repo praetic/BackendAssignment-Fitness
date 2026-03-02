@@ -16,7 +16,7 @@ export const getUser = async (userID: number) => {
 	})
 
 	if (!user) {
-		throw new ApiError(ErrorCode.NOT_FOUND, 'User not found!')
+		throw new ApiError(ErrorCode.NOT_FOUND, 'user_not_found')
 	}
 
 	return user
@@ -24,7 +24,7 @@ export const getUser = async (userID: number) => {
 
 export const updateUser = async (userID: number, updateData: updateUserBody) => {
 	if (!updateData || Object.keys(updateData).length === 0) {
-		throw new ApiError(ErrorCode.EMPTY_BODY, 'No fields provided for update!')
+		throw new ApiError(ErrorCode.EMPTY_BODY, 'no_fields_for_update')
 	}
 
 	// user exists, we dont need to check because its been checked in jwt middleware

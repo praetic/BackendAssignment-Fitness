@@ -7,11 +7,11 @@ export const requireRole = (role: ROLE): RequestHandler => {
 		const user = req.user
 
 		if (!user) {
-			return next(new ApiError(401, ErrorCode.UNAUTHORIZED, 'Authentication required!'))
+			return next(new ApiError(ErrorCode.UNAUTHORIZED, 'unauthorized'))
 		}
 
 		if (user.role !== role) {
-			return next(new ApiError(403, ErrorCode.FORBIDDEN, `User must have role: ${role}`))
+			return next(new ApiError(ErrorCode.FORBIDDEN, 'forbidden_insufficient_role'))
 		}
 
 		next()

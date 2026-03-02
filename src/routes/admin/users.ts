@@ -11,13 +11,13 @@ const router = Router()
 
 export default () => {
 	//#region get all Users
-	router.get('/', async (_req: Request, res: Response, next: NextFunction): Promise<any> => {
+	router.get('/', async (req: Request, res: Response, next: NextFunction): Promise<any> => {
 		try {
 			const data = await getUsers()
 
 			return res.json({
 				data,
-				message: 'List of all users!'
+				message: req.t('user_list')
 			})
 		} catch (err) {
 			next(err)
@@ -36,7 +36,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'User detail!'
+					message: req.t('user_detail')
 				})
 			} catch (err) {
 				next(err)
@@ -59,7 +59,7 @@ export default () => {
 
 				return res.json({
 					data,
-					message: 'User has been updated!'
+					message: req.t('user_updated')
 				})
 			} catch (err) {
 				next(err)

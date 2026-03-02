@@ -17,7 +17,7 @@ export const updateAdminProgramExercises = async (programID: number, exerciseIDs
 		})
 
 		if (!program) {
-			throw new ApiError(ErrorCode.NOT_FOUND, 'Program does not exist!')
+			throw new ApiError(ErrorCode.NOT_FOUND, 'program_not_found')
 		}
 
 		// ids in db

@@ -10,7 +10,7 @@ export const validateBody =
 		const result = schema.safeParse(req.body)
 
 		if (!result.success) {
-			throw new ApiError(ErrorCode.INVALID_BODY, 'Invalid body!', result.error.issues)
+			throw new ApiError(ErrorCode.INVALID_BODY, 'invalid_body', result.error.issues)
 		}
 
 		req.body = result.data
@@ -23,7 +23,7 @@ export const validateQuery =
 		const result = schema.params.safeParse(req.query)
 
 		if (!result.success) {
-			throw new ApiError(ErrorCode.INVALID_QUERY, 'Invalid query!', result.error.issues)
+			throw new ApiError(ErrorCode.INVALID_QUERY, 'invalid_query', result.error.issues)
 		}
 
 		res.locals.validatedQuery = result.data
@@ -38,11 +38,7 @@ export const validateParams =
 		const result = schema.safeParse(req.params)
 
 		if (!result.success) {
-			throw new ApiError(
-				ErrorCode.INVALID_ROUTE_PARAMS,
-				'Invalid route parameters!',
-				result.error.issues
-			)
+			throw new ApiError(ErrorCode.INVALID_ROUTE_PARAMS, 'invalid_params', result.error.issues)
 		}
 
 		req.params = result.data

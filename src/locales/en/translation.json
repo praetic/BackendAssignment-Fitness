@@ -1,0 +1,38 @@
+{
+	"list_of_exercises": "List of exercises!",
+	"program_created": "Program successfully created!",
+	"program_not_found": "Program does not exist!",
+	"program_list": "List of programs!",
+
+	"completed_exercise_created": "Completed exercise successfully created!",
+	"completed_exercise_deleted": "Completed exercise successfully deleted!",
+	"completed_exercise_list_for_user": "List of completed exercises for current user!",
+	"completed_exercise_not_found": "Completed exercise does not exist or cannot be deleted!",
+
+	"exercise_created": "Exercise successfully created!",
+	"exercise_updated": "Exercise successfully updated!",
+	"exercise_deleted": "Exercise successfully deleted!",
+	"exercise_list_updated": "List of exercises successfully updated!",
+	"exercise_not_found": "Exercise does not exist!",
+
+	"user_not_found": "User does not exist!",
+	"user_detail": "User detail!",
+	"user_updated": "User successfully updated!",
+	"user_list": "List of all users!",
+	"user_registered": "User successfully registered!",
+	"user_logged_in": "User has logged in!",
+
+	"unauthorized": "Authentication required!",
+	"forbidden_insufficient_role": "Insufficient permissions - you do not have the required role!",
+
+	"invalid_body": "Invalid request body!",
+	"invalid_query": "Invalid query parameters!",
+	"invalid_params": "Invalid route parameters!",
+
+	"internal_error": "Something went wrong!",
+
+	"invalid_credentials": "Invalid email or password!",
+	"email_already_exists": "Email is already registered!",
+
+	"no_fields_for_update": "No fields provided for update!"
+}

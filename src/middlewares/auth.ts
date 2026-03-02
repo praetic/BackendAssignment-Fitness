@@ -9,7 +9,7 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 		}
 
 		if (!user) {
-			throw new ApiError(ErrorCode.UNAUTHORIZED, 'Authentication required!')
+			throw new ApiError(ErrorCode.UNAUTHORIZED, 'unauthorized')
 		}
 
 		req.user = user
