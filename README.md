@@ -1,17 +1,23 @@
 # DOCUMENTATION:
 
+## Content
+ -  Prerequisites
+ -  Installation and start
+ -  Endpoints
+ -  Tasks
+ -  Fitness app - assignment
+
 ## Prerequisites
 - docker
 - node.js ^16.0.0
-- postgres ^16
 - set env variables in .env
     - for this purpose you can copy variables from .env.example 
 
 ## Installation and start
 - install dependencies ``` npm i ```
 - start db container ``` docker compose up ``` 
-- (optional) seed db ``` npm run seed ```
 - start application ``` npm start ```
+- (optional) seed db ``` npm run seed ```
 
 
 ## Endpoints
@@ -140,7 +146,7 @@
         userID: number
     }
     ```
-- update program exercises 
+- update user
     ###### PATCH /api/admin/users/:userID
     ``` JavaScript
     params: {
@@ -154,25 +160,61 @@
         age?: number
         role?: enum('ADMIN' | 'USER')
     }
+    ```
 
 ### Tasks
+I have added some notes.
 
-- create, update or delete exercises
+#### TASK 1
+- Create authorization layer to enable users to access private API (next Task)
+
+- create new db model User(name:string , surname: string, nickName:string, email: string, age: number, role:[ADMIN/USER])
+- add authorization layer
+- user can register using email, password and role (for purpose of this assignment, user can choose his role in registration)
+    - NOTE: User registers with only email, password and role, so other data does not exist at the moment, they can be set later using ``` PATCH /api/admin/users/:userID ``` or ``` PATCH /api/users/me ``` 
+
+- user can log in with email and password
+- use proper way how to store user data
+you can use any authorization approach or npm module (preferred is JWT strategy and passport)
+    - NOTE: ``` bcrypt ``` for password hashing
+    
+
 #### TASK 2 
+- Create private API for user with role [ADMIN]
+    -  middleware ``` requireRole ``` + ``` authenticateJWT ```
+
+ADMIN can:
 - create, update or delete exercises
+    - NOTE: DELETE -> Entity Completed Exercise cannot exist without Exercise and we have soft delete, so in this case we need to destroy also completed exercises
 - edit exercises in program (add or remove)
+    - NOTE: I have chosen array of ids for updating/removing. 
+        - Lets assume we have program and it has two exercises -> ``` [1,2] ```, 
+        - incoming request has exerciseIDs -> ``` [1,3,4] ```, 
+        - lets also assume all existing exercises are -> ``` [1,2,3] ```, (exercise 4 does not exist), 
+        - in this case updated exercises would be ``` [1,3] ```,
+        - we destroyed exercise 2, 
+        - we destroyed also completed exercises which reffer to exercise 2 
+        - exercise 3 now reffers to program 1, 
+        - exercise 4 does not exist, so it cant be assigned to program 1
 - get all users and all its data
+    - NOTE: without passwordhash
 - get user detail
+    - NOTE: without passwordhash
 - update any user (name, surname, nickName, age, nickName, role)
 
 #### TASK 3    
+- Create private API for user with role [USER]
+    - middleware ``` authenticateJWT ```
+
+USER can:
 - get all users (id, nickName)
 - get own profile data (name, surname, age, nickName)
 - track exercises he has completed (he can track same exercise multiple times, we want to save datetime of completion and duration in seconds)
   - NOTE: Lets assume, user can track exercises backwards too.
 - see list of completed exercises (with datetime and duration) in profile
+    - NOTE: I have chosen different API for completed exercises, because in case when there are many completed exercises without pagination, getting user data may be a problem
+        - ``` GET /api/completed-exercises ```
 - remove tracked exercise from completed exercises list
-
 
 
 # Fitness app - assignment
