@@ -17,7 +17,9 @@
 		]
 	},
 	"include": [
-		"./src/**/*"
+		"./src/**/*",
+		"./config/**/*",
+		"./env.ts"
 	],
 	"exclude": [
 		"node_modules"

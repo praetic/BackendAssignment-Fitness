@@ -7,6 +7,15 @@
 node_modules/
 dist/
 
+# Env
+.env
+
+# Local settings
+.vscode
+
+#logs
+logs
+
 # Compiled Java class files
 *.class
 

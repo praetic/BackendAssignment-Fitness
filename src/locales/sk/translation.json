@@ -1,0 +1,38 @@
+{
+	"list_of_exercises": "Zoznam cvičení!",
+	"program_created": "Program bol úspešne vytvorený",
+	"program_not_found": "Program neexistuje!",
+	"program_list": "Zoznam programov!",
+
+	"completed_exercise_created": "Dokončené cvičenie bolo úspešne vytvorené!",
+	"completed_exercise_deleted": "Dokončené cvičenie bolo úspešne zmazané!",
+	"completed_exercise_list_for_user": "Zoznam dokončených cvičení pre aktuálneho používateľa!",
+	"completed_exercise_not_found": "Dokončené cvičenie neexistuje alebo nemôže byť zmazané!",
+
+	"exercise_created": "Cvičenie bolo úspešne vytvorené!",
+	"exercise_updated": "Cvičenie bolo úspešne updatované!",
+	"exercise_deleted": "Cvičenie bolo úspešne zmazané!",
+	"exercise_list_updated": "Zoznam cvičení bolo úspešne updatované!",
+	"exercise_not_found": "Cvičenie neexistuje!",
+
+	"user_not_found": "Používateľ neexistuje!",
+	"user_detail": "Detail použivateľa!",
+	"user_updated": "Používateľ bol úspešne updatenutý!",
+	"user_list": "Zoznam používateľov!",
+	"user_registered": "Používateľ úspešne zaregistrovaný!",
+	"user_logged_in": "Používateľ sa úspešne prihlásil!",
+
+	"unauthorized": "Vyžadovaná autentikácia!",
+	"forbidden_insufficient_role": "Nedostatočné oprávnenia - nemáte potrebnú rolu!",
+
+	"invalid_body": "Neplatné telo požiadavky!",
+	"invalid_query": "Neplatné parametre v query!",
+	"invalid_params": "Neplatné route parametere!",
+
+	"internal_error": "Niečo sa pokazilo na serveri!",
+
+	"invalid_credentials": "Nesprávny email alebo heslo!",
+	"email_already_exists": "Email je už zaregistrovaný!",
+
+	"no_fields_for_update": "Žiadne hodnoty pre update!"
+}

@@ -1,26 +1,23 @@
-import {
-	Router,
-	Request,
-	Response,
-	NextFunction
-} from 'express'
-
-import { models } from '../db'
+import { Router, type Request, type Response, type NextFunction } from 'express'
+import { getPrograms } from '../services/program'
 
 const router = Router()
 
-const {
-	Program
-} = models
-
 export default () => {
-	router.get('/', async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
-		const programs = await Program.findAll()
-		return res.json({
-			data: programs,
-			message: 'List of programs'
-		})
+	//#region get Programs
+	router.get('/', async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+		try {
+			const programs = await getPrograms()
+
+			return res.json({
+				data: programs,
+				message: req.t('program_list')
+			})
+		} catch (err) {
+			next(err)
+		}
 	})
+	//#endregion
 
 	return router
 }
