@@ -63,7 +63,7 @@ export default () => {
 	//#endregion
 
 	//#region get Completed Exercises for current user
-	router.get('/me', async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+	router.get('/', async (req: Request, res: Response, next: NextFunction): Promise<any> => {
 		try {
 			const userID = req.user.id
 

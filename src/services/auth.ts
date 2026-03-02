@@ -6,7 +6,7 @@ import { ApiError, ErrorCode } from '../utils/ApiError'
 const { User } = models
 
 export const registerUser = async (email: string, password: string, role: string) => {
-	const existingUser = await User.findOne({ where: { email }, attributes: ['id', 'password'] })
+	const existingUser = await User.findOne({ where: { email }, attributes: ['id', 'passwordHash'] })
 
 	if (existingUser) {
 		throw new ApiError(409, ErrorCode.EMAIL_ALREADY_EXISTS, 'Email is already registered!')
@@ -16,7 +16,7 @@ export const registerUser = async (email: string, password: string, role: string
 
 	const createdUser = await User.create({
 		email,
-		password: passwordHash,
+		passwordHash,
 		role
 	})
 
@@ -32,13 +32,13 @@ export const registerUser = async (email: string, password: string, role: string
 }
 
 export const loginUser = async (email: string, password: string) => {
-	const user = await User.findOne({ where: { email }, attributes: ['id', 'password'] })
+	const user = await User.findOne({ where: { email }, attributes: ['id', 'passwordHash'] })
 
 	if (!user) {
 		throw new ApiError(401, ErrorCode.INVALID_CREDENTIALS, 'Invalid email or password!')
 	}
 
-	const isMatch = await bcrypt.compare(password, user.password)
+	const isMatch = await bcrypt.compare(password, user.passwordHash)
 
 	if (!isMatch) {
 		throw new ApiError(401, ErrorCode.INVALID_CREDENTIALS, 'Invalid email or password!')

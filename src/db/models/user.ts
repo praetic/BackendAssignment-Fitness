@@ -11,7 +11,7 @@ export interface UserModel extends Model {
 	email: string
 	age: number
 	role: ROLE
-	password: string
+	passwordHash: string
 	createdAt: Date
 	updatedAt: Date
 	deletedAt?: Date | null
@@ -53,7 +53,7 @@ export default (sequelize: Sequelize, modelName: string) => {
 				type: DataTypes.ENUM(...Object.values(ROLE)),
 				allowNull: false
 			},
-			password: {
+			passwordHash: {
 				type: DataTypes.STRING,
 				allowNull: false
 			}

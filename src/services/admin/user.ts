@@ -5,13 +5,13 @@ import { ApiError, ErrorCode } from '../../utils/ApiError'
 const { User } = models
 
 export const getUsers = async () => {
-	const users = await User.findAll({ attributes: { exclude: ['password'] } })
+	const users = await User.findAll({ attributes: { exclude: ['passwordHash'] } })
 
 	return users
 }
 
 export const getUser = async (userID: number) => {
-	const user = await User.findByPk(userID, { attributes: { exclude: ['password'] } })
+	const user = await User.findByPk(userID, { attributes: { exclude: ['passwordHash'] } })
 
 	if (!user) {
 		throw new ApiError(404, ErrorCode.NOT_FOUND, 'User does not exist!')
