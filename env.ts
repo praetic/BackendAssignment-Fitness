@@ -21,7 +21,6 @@ const envSchema = z.object({
 	DB_PASSWORD: z.string().min(1),
 	DB_HOST: z.string().min(1),
 	ACCESS_TOKEN_SECRET: z.string().min(1),
-	REFRESH_TOKEN_SECRET: z.string().min(1),
 	ACCESS_TOKEN_EXPIRATION: z.string().min(2)
 })
 

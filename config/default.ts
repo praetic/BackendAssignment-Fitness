@@ -1,4 +1,3 @@
-import type { Config } from '../src/types/config'
 import env from '../env'
 import type { Options } from 'sequelize'
 
@@ -32,7 +31,6 @@ export default {
 	},
 	jwt: {
 		accessTokenSecret: env.ACCESS_TOKEN_SECRET,
-		refreshTokenSecret: env.REFRESH_TOKEN_SECRET,
 		accessTokenExpiration: env.ACCESS_TOKEN_EXPIRATION
 	}
 } as const
