@@ -193,8 +193,8 @@ ADMIN can:
         - lets also assume all existing exercises are -> ``` [1,2,3] ```, (exercise 4 does not exist), 
         - in this case updated exercises would be ``` [1,3] ```,
         - we destroyed exercise 2, 
-        - we destroyed also completed exercises which reffer to exercise 2 
-        - exercise 3 now reffers to program 1, 
+        - we destroyed also completed exercises which refer to exercise 2 
+        - exercise 3 now refers to program 1, 
         - exercise 4 does not exist, so it cant be assigned to program 1
 - get all users and all its data
     - NOTE: without passwordhash
