@@ -1,5 +1,5 @@
 import type { RequestHandler } from 'express'
-import type { ZodType } from 'zod'
+import type { z, ZodType } from 'zod'
 import type { ParamsDictionary } from 'express-serve-static-core'
 import type { ParsedQs } from 'qs'
 import { ApiError, ErrorCode } from '../utils/ApiError'
@@ -10,7 +10,7 @@ export const validateBody =
 		const result = schema.safeParse(req.body)
 
 		if (!result.success) {
-			throw new ApiError(400, ErrorCode.INVALID_BODY, 'Invalid body!', result.error.issues)
+			throw new ApiError(ErrorCode.INVALID_BODY, 'Invalid body!', result.error.issues)
 		}
 
 		req.body = result.data
@@ -18,17 +18,15 @@ export const validateBody =
 	}
 
 export const validateQuery =
-	<TQuery extends ParsedQs>(
-		schema: ZodType<TQuery>
-	): RequestHandler<ParamsDictionary, unknown, unknown, TQuery> =>
-	(req, _res, next) => {
-		const result = schema.safeParse(req.query)
+	<T extends z.ZodType<any>>(schema: { params: T }): RequestHandler =>
+	(req, res, next) => {
+		const result = schema.params.safeParse(req.query)
 
 		if (!result.success) {
-			throw new ApiError(400, ErrorCode.INVALID_QUERY, 'Invalid query!', result.error.issues)
+			throw new ApiError(ErrorCode.INVALID_QUERY, 'Invalid query!', result.error.issues)
 		}
 
-		req.query = result.data
+		res.locals.validatedQuery = result.data
 		next()
 	}
 
@@ -41,7 +39,6 @@ export const validateParams =
 
 		if (!result.success) {
 			throw new ApiError(
-				400,
 				ErrorCode.INVALID_ROUTE_PARAMS,
 				'Invalid route parameters!',
 				result.error.issues
