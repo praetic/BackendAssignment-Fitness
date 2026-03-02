@@ -13,6 +13,9 @@ dist/
 # Local settings
 .vscode
 
+#logs
+logs
+
 # Compiled Java class files
 *.class
 

@@ -5,6 +5,7 @@ import { sequelize } from './db'
 import { initPassport } from './utils/passport'
 import { errorHandler } from './middlewares/errorHandler'
 import registerRoutes from './routes'
+import logger from './utils/logger'
 
 const app = express()
 
@@ -25,9 +26,9 @@ const httpServer = http.createServer(app)
 try {
 	sequelize.sync()
 } catch (_error) {
-	console.log('Sequelize sync error')
+	logger.info('Sequelize sync error')
 }
 
-httpServer.listen(8000).on('listening', () => console.log(`Server started at port ${8000}`))
+httpServer.listen(8000).on('listening', () => logger.info(`Server started at port ${8000}`))
 
 export default httpServer

@@ -7,9 +7,10 @@ import defineExercise from './models/exercise'
 import defineProgram from './models/program'
 import defineUser from './models/user'
 import defineCompletedExercise from './models/completedExercise'
-import type { IConfig as IConfigMap } from '../types/config'
+import type { Config } from '../types/config'
+import logger from '../utils/logger'
 
-const DATABASE_CONFIG = config.get('database') as IConfigMap['database']
+const DATABASE_CONFIG = config.get('database') as Config['database']
 
 const sequelize: Sequelize = new Sequelize(
 	DATABASE_CONFIG.database,
@@ -21,7 +22,7 @@ const sequelize: Sequelize = new Sequelize(
 	}
 )
 
-sequelize.authenticate().catch((e: any) => console.error(`Unable to connect to the database${e}.`))
+sequelize.authenticate().catch((e: any) => logger.error(`Unable to connect to the database${e}.`))
 
 const Exercise = defineExercise(sequelize, 'exercise')
 const Program = defineProgram(sequelize, 'program')
@@ -38,7 +39,6 @@ type Models = typeof models
 
 // check if every model is imported
 const modelsFiles = fs.readdirSync(path.join(__dirname, 'models'))
-console.log(modelsFiles)
 
 if (Object.keys(models).length !== modelsFiles.length) {
 	throw new Error('You probably forgot import database model!')

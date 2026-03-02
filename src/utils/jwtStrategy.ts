@@ -1,15 +1,13 @@
 import type { PassportStatic } from 'passport'
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 import config from 'config'
-import type { IConfig as IConfigMap } from '../types/config'
+import type { Config } from '../types/config'
 import type { AuthJwtPayload } from './jwt'
 import { models } from '../db'
 
 const { User } = models
 
-const accessTokenSecret = config.get(
-	'jwt.accessTokenSecret'
-) as IConfigMap['jwt']['accessTokenSecret']
+const accessTokenSecret = config.get('jwt.accessTokenSecret') as Config['jwt']['accessTokenSecret']
 
 export const registerJwtStrategy = (passport: PassportStatic) => {
 	passport.use(

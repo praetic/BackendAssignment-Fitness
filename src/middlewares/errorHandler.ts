@@ -1,7 +1,10 @@
 import type { ErrorRequestHandler } from 'express'
 import { ApiError } from '../utils/ApiError'
+import logger from '../utils/logger'
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next): void => {
+	logger.error(err.message)
+
 	if (err instanceof ApiError) {
 		res.status(err.statusCode).json({
 			error: {
@@ -13,8 +16,6 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next): void =
 
 		return
 	}
-
-	console.error(err)
 
 	res.status(500).json({
 		error: {

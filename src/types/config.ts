@@ -1,6 +1,6 @@
 import type { Options } from 'sequelize'
 
-export interface IConfig {
+export interface Config {
 	env: string
 	server: {
 		port: number

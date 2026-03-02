@@ -1,14 +1,12 @@
 import config from 'config'
-import type { IConfig as IConfigMap } from '../types/config'
+import type { Config } from '../types/config'
 import jwt, { type SignOptions } from 'jsonwebtoken'
 import type { ROLE } from './enums'
 
-const accessTokenSecret = config.get(
-	'jwt.accessTokenSecret'
-) as IConfigMap['jwt']['accessTokenSecret']
+const accessTokenSecret = config.get('jwt.accessTokenSecret') as Config['jwt']['accessTokenSecret']
 const accessTokenExpiry = config.get(
 	'jwt.accessTokenExpiration'
-) as IConfigMap['jwt']['accessTokenExpiration']
+) as Config['jwt']['accessTokenExpiration']
 
 export type JwtUser = {
 	id: string
