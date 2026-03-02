@@ -75,7 +75,7 @@
     ``` JavaScript
     body: {
         durationSeconds: number(min:1)
-        completedAt: date
+        completedAt: date //example: "completedAt": "2026-02-08T09:15:30.000"
     }
     ```
 #### /users
