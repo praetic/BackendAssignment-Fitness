@@ -20,14 +20,16 @@ export const registerUser = async (email: string, password: string, role: string
 		role
 	})
 
+	const accessToken = await signAccessToken({
+		id: createdUser.id.toString(),
+		role: createdUser.role
+	})
+
 	return {
 		user: {
 			id: Number(createdUser.id)
 		},
-		accessToken: signAccessToken({
-			id: createdUser.id.toString(),
-			role: createdUser.role
-		})
+		accessToken
 	}
 }
 
@@ -44,13 +46,15 @@ export const loginUser = async (email: string, password: string) => {
 		throw new ApiError(ErrorCode.INVALID_CREDENTIALS, 'invalid_credentials')
 	}
 
+	const accessToken = await signAccessToken({
+		id: user.id.toString(),
+		role: user.role
+	})
+
 	return {
 		user: {
 			id: Number(user.id)
 		},
-		accessToken: signAccessToken({
-			id: user.id.toString(),
-			role: user.role
-		})
+		accessToken
 	}
 }

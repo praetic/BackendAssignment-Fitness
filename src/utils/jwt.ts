@@ -20,7 +20,26 @@ export type AuthJwtPayload = {
 	exp?: number
 }
 
-export const signAccessToken = (user: JwtUser) =>
-	jwt.sign({ sub: user.id }, accessTokenSecret, {
-		expiresIn: accessTokenExpiry as SignOptions['expiresIn']
+export const signAccessToken = (user: JwtUser): Promise<string> => {
+	// jwt.sign is synchronous
+	return new Promise((resolve, reject) => {
+		jwt.sign(
+			{ sub: user.id },
+			accessTokenSecret,
+			{
+				expiresIn: accessTokenExpiry as SignOptions['expiresIn']
+			},
+			(err, token) => {
+				if (err) {
+					return reject(err)
+				}
+
+				if (!token) {
+					return reject(new Error('Failed to generate token!'))
+				}
+
+				resolve(token)
+			}
+		)
 	})
+}
